@@ -2,12 +2,14 @@ package com.Practice.utilities;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.safari.SafariDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -15,35 +17,17 @@ import java.util.concurrent.TimeUnit;
 
 public class Driver {
 
-    /*
-      Creating private constructor so its class' object is not reachable from outside
-       */
     private Driver() {
     }
 
-    /*
-   Making webdriver private so its not reachable from outside of the class
-   Making it static so we can run it before everything else and we can use it in static method
-    */
     private static ThreadLocal<WebDriver> driverPool = new ThreadLocal<>();
 
-    /*
-   Creating re-usable utility method that will return same 'driver' instance everytime we call it.
-    */
     public static WebDriver getDriver() {
-
         if (driverPool.get() == null) {
             synchronized (Driver.class) {
 
-            /*
-            We read the browser type from configuration.properties file using .getProperty method we are creating
-            in ConfigurationReader class
-             */
-                String browserType = ConfigurationReader.getProperty("browser");
+            String browserType = ConfigurationReader.getProperty("browser");
 
-            /*
-            Depending on the browser type our switch statement will open specific type of driver
-             */
                 switch (browserType) {
                     case "chrome":
                         WebDriverManager.chromedriver().setup();
@@ -55,7 +39,17 @@ public class Driver {
                         driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
                         break;
 
-                    case "remote-chrome":
+                    case "chrome-headless":
+                        WebDriverManager.chromedriver().setup();
+                        ChromeOptions chromeOption = new ChromeOptions();
+                        chromeOption.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+                        chromeOption.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
+                        driverPool.set(new ChromeDriver(chromeOption.setHeadless(true)));
+                        driverPool.get().manage().window().maximize();
+                        driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                        break;
+
+                    case "chrome-remote":
                         try {
                             String ipAddress = "3.83.90.189";
                             URL url = new URL("http://" + ipAddress + ":4444/wd/hub");
@@ -69,7 +63,6 @@ public class Driver {
                         break;
 
                     case "remoteChromeSSL":
-
                         WebDriverManager.chromedriver().setup();
                         ChromeOptions chromeOptions1 = new ChromeOptions();
                         chromeOptions1.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
@@ -91,6 +84,26 @@ public class Driver {
                         driverPool.set(new FirefoxDriver());
                         driverPool.get().manage().window().maximize();
                         driverPool.get().manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+                        break;
+
+                    case "safari":
+                        if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+                            throw new WebDriverException("Your operating system does not support the requested browser");
+                        }
+                        WebDriverManager.getInstance(SafariDriver.class).setup();
+                        driverPool.set(new SafariDriver());
+                        break;
+
+                    case "safari-remote":
+                        try {
+                            String ipAddress = "3.83.90.189";
+                            URL url = new URL("http://" + ipAddress + ":4444/wd/hub");
+                            DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+                            desiredCapabilities.setBrowserName("safari");
+                            driverPool.set(new RemoteWebDriver(url, desiredCapabilities));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                         break;
                 }
             }

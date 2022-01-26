@@ -1,9 +1,8 @@
 package com.Practice.step_definitions;
 
-import com.Practice.pages.AmazonPage;
+import com.Practice.pages.AshleyMPLinksPage;
 import com.Practice.utilities.BrowserUtils;
 import com.Practice.utilities.Driver;
-import com.Practice.utilities.OscarTest;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
@@ -12,8 +11,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class AmazonSearchStepDefs {
-    AmazonPage amazon;
+public class AshleyMPLinks_StepDefs {
+    AshleyMPLinksPage amazon;
     WebDriverWait wait;
     double singlePriceForHat;
     Select selectQuantity;
@@ -26,7 +25,7 @@ public class AmazonSearchStepDefs {
 
     @When("User search for hats for men")
     public void user_search_for_hats_for_men() {
-        amazon = new AmazonPage();
+        amazon = new AshleyMPLinksPage();
         amazon.searchBox.sendKeys("hats for men"+ Keys.ENTER);
     }
 
@@ -37,7 +36,6 @@ public class AmazonSearchStepDefs {
         amazon.firstHat.click();
         // get the single price for the hat
         String priceText = amazon.price.getText();
-        singlePriceForHat = OscarTest.priceConverter(priceText);
         // Select the quatity as 2
         selectQuantity = new Select(amazon.quantityDropDown);
         selectQuantity.selectByVisibleText("2");

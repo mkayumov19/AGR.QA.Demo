@@ -8,9 +8,9 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class AmazonPage {
+public class AshleyMPLinksPage {
 
-    public AmazonPage(){
+    public AshleyMPLinksPage(){
         PageFactory.initElements(Driver.getDriver(),this);
     }
 

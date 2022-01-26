@@ -22,7 +22,7 @@ public class ExcelWrite {
 
         String path = "SampleData.xlsx";
 
-        //To be able to read from Excel file, we need to load it into FileInputStream
+        //Load it into FileInputStream
         FileInputStream fileInputStream = new FileInputStream(path);
 
         //workbook > sheet > row > cell
@@ -56,7 +56,7 @@ public class ExcelWrite {
             }
         }
 
-        //=================================================================
+
         //Use fileOutputStream to push changes -> load the file to fileOutputStream
         FileOutputStream fileOutputStream = new FileOutputStream(path);
 

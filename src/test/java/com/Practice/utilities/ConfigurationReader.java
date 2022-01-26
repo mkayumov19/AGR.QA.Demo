@@ -9,24 +9,23 @@ We will create a re-usable method that will be reading from configuration.reader
  */
 public class ConfigurationReader {
 
-    //1# Create properties object
+    //Create properties object
     private static final Properties properties = new Properties();
 
     static {
         try {
-            //#2 Load the file into FileInputStream
+            //Load the file into FileInputStream
             FileInputStream file = new FileInputStream("configuration.properties");
 
-            //#3 Load properties object with the file(configuration.properties)
+            //Load properties object with the file(configuration.properties)
             properties.load(file);
 
-            //@4 Close the file
+            //Close the file
             file.close();
 
         } catch (IOException e) {
             System.out.println("File not found in Configuration properties.");
         }
-
     }
 
     //Use the above created Logic to create a reusable static object

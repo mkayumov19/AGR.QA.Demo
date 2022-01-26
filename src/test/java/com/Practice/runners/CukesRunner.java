@@ -10,12 +10,13 @@ import org.junit.runner.RunWith;
         stepNotifications = true,
         plugin = {"html:target/cucumber-report.html",
                   "json:target/cucumber.json",
+                  "junit:target/junit/junit-report.xml",
                   "rerun:target/rerun.txt"
         },
         features = "src/test/resources/features",
         glue = "com/Practice/step_definitions",
         dryRun = false,
-        tags = "@etsySearch"
+        tags = "@wip"
 
 )
 

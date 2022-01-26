@@ -1,6 +1,5 @@
 package com.Practice.step_definitions;
 
-import com.Practice.pages.EtsySearchPage;
 import com.Practice.utilities.ConfigurationReader;
 import com.Practice.utilities.Driver;
 import io.cucumber.java.en.Given;
@@ -8,7 +7,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 
-public class Etsy_StepDefinitions {
+public class ProductLists_StepDefs {
 
     @Given("user is on the Etsy landing page")
     public void user_is_on_the_etsy_landing_page() {
