@@ -7,7 +7,6 @@ import org.openqa.selenium.TakesScreenshot;
 
 public class Hooks {
 
-    //From io.cucumber.java not from junit
     @Before (value = "@login", order = 1)
     public void setupLoginScenario(){
         System.out.println("BEFORE--Setting up browser with further details...");
@@ -20,7 +19,7 @@ public class Hooks {
             scenario.attach(screenshot, "image/png", scenario.getName());
         }
         System.out.println("AFTER--Teardown steps are being applied...");
-        Driver.closeDriver();
+//        Driver.closeDriver();
     }
 
     @Before ("@db")
