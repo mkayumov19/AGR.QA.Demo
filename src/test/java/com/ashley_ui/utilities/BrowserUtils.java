@@ -1,4 +1,4 @@
-package com.Practice.utilities;
+package com.ashley_ui.utilities;
 
 import org.junit.Assert;
 import org.openqa.selenium.*;
@@ -23,7 +23,7 @@ public class BrowserUtils {
         };
         try {
             System.out.println("Waiting for page to load...");
-            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeOutInSeconds);
+            WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeOutInSeconds));
             wait.until(expectation);
         } catch (Throwable error) {
             System.out.println(
@@ -36,7 +36,7 @@ public class BrowserUtils {
      @param expectedTitle
      */
     public static void assertTitle(String expectedTitle){
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 10);
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
         wait.until(ExpectedConditions.titleIs(expectedTitle));
         String actualTitle = Driver.getDriver().getTitle();
         Assert.assertEquals(expectedTitle, actualTitle);
@@ -56,7 +56,7 @@ public class BrowserUtils {
         return actualAsString;
     }
 
-    /*
+    /**
      * switches to new window by the exact title
      * returns to original window if windows with given title not found
      */
@@ -85,23 +85,23 @@ public class BrowserUtils {
         return elemTexts;
     }
 
-    public static WebElement waitForVisibility(WebElement element, int timeToWaitInSec) {
+    public static WebElement waitForVisibility(WebElement element, Duration timeToWaitInSec) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeToWaitInSec);
         return wait.until(ExpectedConditions.visibilityOf(element));
     }
 
     public static WebElement waitForVisibility(By locator, int timeout) {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeout);
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
         return wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    public static WebElement waitForClickability(WebElement element, int timeout) {
+    public static WebElement waitForClickability(WebElement element, Duration timeout) {
         WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeout);
         return wait.until(ExpectedConditions.elementToBeClickable(element));
     }
 
     public static WebElement waitForClickability(By locator, int timeout) {
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), timeout);
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(timeout));
         return wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
@@ -151,7 +151,7 @@ public class BrowserUtils {
      *
      * @param element
      */
-    public void waitForStaleElement(WebElement element) {
+    public static void waitForStaleElement(WebElement element) {
         int y = 0;
         while (y <= 15) {
             if (y == 1)
@@ -182,7 +182,7 @@ public class BrowserUtils {
      * @param select
      * @return
      */
-    public WebElement selectRandomTextFromDropdown(Select select) {
+    public static WebElement selectRandomTextFromDropdown(Select select) {
         Random random = new Random();
         List<WebElement> weblist = select.getOptions();
         int optionIndex = 1 + random.nextInt(weblist.size() - 1);
@@ -195,7 +195,7 @@ public class BrowserUtils {
      *
      * @param element
      */
-    public void clickWithJS(WebElement element) {
+    public static void clickWithJS(WebElement element) {
         ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
         ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].click();", element);
     }
@@ -205,7 +205,7 @@ public class BrowserUtils {
      *
      * @param element
      */
-    public void scrollToElement(WebElement element) {
+    public static void scrollToElement(WebElement element) {
         ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].scrollIntoView(true);", element);
     }
 
@@ -214,7 +214,7 @@ public class BrowserUtils {
      *
      * @param element
      */
-    public void doubleClick(WebElement element) {
+    public static void doubleClick(WebElement element) {
         new Actions(Driver.getDriver()).doubleClick(element).build().perform();
     }
 
@@ -225,7 +225,7 @@ public class BrowserUtils {
      * @param attributeName
      * @param attributeValue
      */
-    public void setAttribute(WebElement element, String attributeName, String attributeValue) {
+    public static void setAttribute(WebElement element, String attributeName, String attributeValue) {
         ((JavascriptExecutor) Driver.getDriver()).executeScript("arguments[0].setAttribute(arguments[1], arguments[2]);", element, attributeName, attributeValue);
     }
 
@@ -233,7 +233,7 @@ public class BrowserUtils {
      * @param element
      * @param check
      */
-    public void selectCheckBox(WebElement element, boolean check) {
+    public static void selectCheckBox(WebElement element, boolean check) {
         if (check) {
             if (!element.isSelected()) {
                 element.click();
@@ -245,10 +245,10 @@ public class BrowserUtils {
         }
     }
 
-    /*
+    /**
     Method that will accept int  arg
     Wait for given second duration
-    //1sec = 1000 milli seconds
+    //1sec = 1000 milliseconds
     //1 * 1000 = 1000
         Thread.sleep(1000);
         Thread.sleep(2000);
