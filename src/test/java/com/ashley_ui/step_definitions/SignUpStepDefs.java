@@ -38,7 +38,7 @@ public class SignUpStepDefs {
 
     @And("user clicks Create account link")
     public void userClicksCreateAccountLink() {
-        actions.moveToElement(signUpPage.createAccount).build().perform();
+        actions.click(signUpPage.createAccount);
         signUpPage.createAccount.click();
     }
 
@@ -51,7 +51,7 @@ public class SignUpStepDefs {
         String phone = "4126010000";
         String password = "M1"+faker.name().nameWithMiddle()+"#";
 
-        actions.moveToElement(signUpPage.password).build().perform();
+        actions.click(signUpPage.password);
         signUpPage.firstName.sendKeys(firstName);
         signUpPage.lastName.sendKeys(lastName);
         signUpPage.email.sendKeys(email);

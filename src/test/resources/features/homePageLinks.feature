@@ -1,5 +1,5 @@
 
-@regression  @smoke
+@regression  @smoke @links
 Feature: Verification of all links from main landing page
          As a user, I should be able to see and be able to click on all available links on page
 

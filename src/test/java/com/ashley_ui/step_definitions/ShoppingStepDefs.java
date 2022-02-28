@@ -3,45 +3,54 @@
  import com.ashley_ui.pages.SearchPage;
  import com.ashley_ui.pages.SignUpPage;
  import com.ashley_ui.utilities.BrowserUtils;
+ import com.ashley_ui.utilities.Driver;
  import io.cucumber.java.en.Given;
  import io.cucumber.java.en.Then;
  import io.cucumber.java.en.When;
+ import org.openqa.selenium.WebElement;
+ import org.openqa.selenium.support.ui.ExpectedCondition;
+ import org.openqa.selenium.support.ui.ExpectedConditions;
+ import org.openqa.selenium.support.ui.WebDriverWait;
+
+ import java.nio.file.WatchEvent;
+ import java.time.Duration;
 
 
  public class ShoppingStepDefs {
 
     SearchPage shoppingPage = new SearchPage();
     SignUpPage signUpPage = new SignUpPage();
+    WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(5));
 
-    @Given("user clicks on {string} link")
-    public void user_clicks_on_start_shopping_link(String startShopping) {
-        signUpPage.startShop.click();
+    @Given("user clicks on start shopping link")
+    public void user_clicks_on_start_shopping_link() {
+        signUpPage.startShopping.click();
     }
 
-    @When("user hovers over to {string}, chooses {string} and clicks")
-    public void user_hovers_over_to_furniture_chooses_tv_stand_and_clicks(String furniture, String tvStand) {
+    @When("user hovers over to Furniture, chooses Tv-Stand and clicks")
+    public void userHoversOverToFurnitureChoosesTvStandAndClicks() {
+        BrowserUtils.waitForVisibility(shoppingPage.furniture, Duration.ofSeconds(5));
         BrowserUtils.hover((shoppingPage.furniture));
-        shoppingPage.tvStand.click();
+        BrowserUtils.waitForVisibility(shoppingPage.tvStand, Duration.ofSeconds(5)).click();
     }
 
     @When("user navigates to last page")
     public void user_navigates_to_last_page() {
         BrowserUtils.scrollToElement(shoppingPage.lastPageBtn);
-        shoppingPage.lastPageBtn.click();
+        BrowserUtils.waitForVisibility(shoppingPage.lastPageBtn, Duration.ofSeconds(5)).click();
     }
 
     @Then("user chooses last available product and clicks on it")
     public void user_chooses_last_available_product_and_clicks_on_it() {
         BrowserUtils.scrollToElement(shoppingPage.lastTvStand);
-        BrowserUtils.waitForPageToLoad(3);
         shoppingPage.lastTvStand.click();
     }
 
     @Then("user adds 2 products to his cart")
     public void user_adds_max_amount_allowed_product_to_his_cart() {
-        shoppingPage.qty.click();
+        BrowserUtils.waitForClickability(shoppingPage.qty, Duration.ofSeconds(5)).click();
         BrowserUtils.sleep(1);
-        shoppingPage.addToCart.click();
+        BrowserUtils.waitForClickability(shoppingPage.addToCart, Duration.ofSeconds(5)).click();
     }
 
     @Then("user checks his cart with total amount")

@@ -48,7 +48,7 @@ public class SignUpPage {
     public WebElement userName;
 
     @FindBy(xpath = "//div[@class='start-shopping']")
-    public WebElement startShop;
+    public WebElement startShopping;
 
 
 

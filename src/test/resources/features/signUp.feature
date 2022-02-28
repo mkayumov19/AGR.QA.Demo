@@ -16,8 +16,8 @@ Feature: New user signup and shopping feature.
 
   Scenario: User searches for Tv-stand and adds product to cart
             and purchases it. Then verifies total sum in cart.
-    Given user clicks on "start shopping" link
-    When  user hovers over to "Furniture", chooses "Tv-Stand" and clicks
+    Given user clicks on start shopping link
+    When  user hovers over to Furniture, chooses Tv-Stand and clicks
     And   user navigates to last page
     Then  user chooses last available product and clicks on it
     And   user adds 2 products to his cart
